@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import Header from './components/header'
+import Header from './components/Header'
 import TodoEditor from './components/TodoEditor'
 import TodoList from './components/TodoList'
 import './App.css'
@@ -47,11 +47,27 @@ function App() {
 
   }
 
+  const onUpdate=(targetId:number)=>{
+    setTodos(
+      todos.map((todo)=>
+        todo.id===targetId? {...todo, isDone:!todo.isDone}:todo
+      )
+    )
+  }
+
+  const onDelete=(targetId:number)=>{
+    setTodos(todos.filter((todo)=>todo.id!==targetId))
+  }
+
   return (
     <div className='App'>
       <Header />
       <TodoEditor onCreate={onCreate} />
-      <TodoList />
+      <TodoList 
+      onUpdate={onUpdate}
+      onDelete={onDelete}
+      todos={todos}
+      />
 
     </div>
   )
